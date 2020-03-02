@@ -13,32 +13,32 @@ export default class TodoItem extends XRComponent {
     }
 
     onToggle() {
-        this.post("TOGGLE_STATE", {id: this.props.item.id} );
+        this.post("TODO_TOGGLE_STATE", {id: this.props.item.id} );
     }
 
     handleSubmit(e) {
-        this.post("EDIT_TODO_DONE", {id: this.props.item.id, editText: e.target.value}); 
+        this.post("TODO_EDIT_DONE", {id: this.props.item.id, editText: e.target.value}); 
     }
 
     handleChange(e) {
-        this.post("ITEM_TXT_CHANGED", {editText: e.target.value});
+        this.post("TODO_ITEM_TXT_CHANGED", {editText: e.target.value});
     }
 
     handleKeyDown(e) {
         //esc key = 27
         if (event.which === 27) {
-            this.post("EDIT_TODO_DONE", {id: this.props.item.id, editText: this.props.item.title});
+            this.post("TODO_EDIT_DONE", {id: this.props.item.id, editText: this.props.item.title});
         } else if (event.which === 13) { //enter key
-            this.post("EDIT_TODO_DONE", {id: this.props.item.id, editText: e.target.value});
+            this.post("TODO_EDIT_DONE", {id: this.props.item.id, editText: e.target.value});
         }
     }
 
     handleEdit() {
-        this.post("EDIT_TODO", {id: this.props.item.id, editText: this.props.item.title});
+        this.post("TODO_EDIT", {id: this.props.item.id, editText: this.props.item.title});
     }
 
     onDestroy() {
-        this.post("DEL_TODO", {id: this.props.item.id});
+        this.post("TODO_DEL", {id: this.props.item.id});
     }
 
     componentDidUpdate(prevProps) {

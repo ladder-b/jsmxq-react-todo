@@ -25,7 +25,7 @@ export default class TodoFooter extends XRComponent {
             clearButton = (
                 <button
                     className="clear-completed"
-                    onClick={() => this.post("CLEAR_COMPLETED")}>
+                    onClick={() => this.post("TODO_CLEAR_COMPLETED")}>
                     Clear completed
                 </button>
             );
@@ -41,7 +41,7 @@ export default class TodoFooter extends XRComponent {
                     <li>
                         <a
                             href='#'
-                            onClick={() => {this.post("SHOW_ONLY", 'all'); return false}}
+                            onClick={() => {this.post("TODO_SHOW_ONLY", 'all'); return false}}
                             className={classNames({selected: nowShowing === 'all'})}
                         >
                             All
@@ -51,7 +51,7 @@ export default class TodoFooter extends XRComponent {
                     <li>
                         <a
                             href='#'
-                            onClick={() => {this.post("SHOW_ONLY", 'active'); return false}}
+                            onClick={() => {this.post("TODO_SHOW_ONLY", 'active'); return false}}
                             className={classNames({selected: nowShowing === 'active'})}>
                                 Active
                         </a>
@@ -60,7 +60,7 @@ export default class TodoFooter extends XRComponent {
                     <li>
                         <a
                             href="#"
-                            onClick={() => {this.post("SHOW_ONLY", 'completed'); return false}}
+                            onClick={() => {this.post("TODO_SHOW_ONLY", 'completed'); return false}}
                             className={classNames({selected: nowShowing === 'completed'})}>
                                 Completed
                         </a>

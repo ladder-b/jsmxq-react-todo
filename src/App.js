@@ -22,61 +22,63 @@ class App extends XRComponent {
       editText: ''
     }
 
-    this.subscriber.addSubject("EDIT_NEW_ITEM");
-    this.subscriber.addSubject("ADD_NEW_ITEM");
-    this.subscriber.addSubject("SHOW_ONLY");
-    this.subscriber.addSubject("TOGGLE_STATE");
-    this.subscriber.addSubject("CLEAR_COMPLETED")
-    this.subscriber.addSubject("DEL_TODO");
-    this.subscriber.addSubject("TOGGLE_ALL");
-    this.subscriber.addSubject("EDIT_TODO");
-    this.subscriber.addSubject("ITEM_TXT_CHANGED");
-    this.subscriber.addSubject("EDIT_TODO_DONE");
+    // this.subscriber.addSubject("TODO_EDIT_NEW_ITEM");
+    // this.subscriber.addSubject("TODO_ADD_NEW_ITEM");
+    // this.subscriber.addSubject("TODO_SHOW_ONLY");
+    // this.subscriber.addSubject("TODO_TOGGLE_STATE");
+    // this.subscriber.addSubject("TODO_CLEAR_COMPLETED")
+    // this.subscriber.addSubject("TODO_DEL");
+    // this.subscriber.addSubject("TODO_TOGGLE_ALL");
+    // this.subscriber.addSubject("TODO_EDIT");
+    // this.subscriber.addSubject("TODO_ITEM_TXT_CHANGED");
+    // this.subscriber.addSubject("TODO_EDIT_DONE");
+
+    this.subscriber.addSubject(/TODO_\B/);
   }
 
   onMessageReceive(msg) {
     let todoModel = this.state.todoModel;
     switch(msg.subject) {
-        case 'EDIT_NEW_ITEM':
+        case 'TODO_EDIT_NEW_ITEM':
           this.setState({itemText: msg.content.itemText});
           break;
-        case 'ADD_NEW_ITEM':
+        case 'TODO_ADD_NEW_ITEM':
           todoModel.add(msg.content.itemText);
           this.setState({itemText: '', todoModel: todoModel});
           break;
-        case "SHOW_ONLY":
+        case "TODO_SHOW_ONLY":
           this.setState({nowShowing: msg.content});
           break;
           /*recvd, whenever todo item state changes*/
-        case 'TOGGLE_STATE':
+        case 'TODO_TOGGLE_STATE':
           todoModel.toggleState(msg.content.id);
           this.setState({
             count: msg.content.count,
             completedCount: msg.content.completedCount
           });
           break;
-        case "CLEAR_COMPLETED":
+        case "TODO_CLEAR_COMPLETED":
           todoModel.clearCompleted();
           this.setState({todoModel: todoModel});
           break;
-        case "DEL_TODO":
+        case "TODO_DEL":
           todoModel.remove(msg.content.id);
           this.setState({todoModel: todoModel});
           break;
-        case "TOGGLE_ALL":
+        case "TODO_TOGGLE_ALL":
           todoModel.toggleAll(this.state.toggleAll);
           this.setState({
             todoModel: todoModel,
             toggleAll: !this.state.toggleAll
           });
           break;
-        case "EDIT_TODO":
+        case "TODO_EDIT":
           this.setState({editId: msg.content.id, editText: msg.content.editText});
           break;
-        case "ITEM_TXT_CHANGED":
+        case "TODO_ITEM_TXT_CHANGED":
           this.setState({editText: msg.content.editText});
           break;
-        case "EDIT_TODO_DONE":
+        case "TODO_EDIT_DONE":
           todoModel.changeTodo(msg.content.id, msg.content.editText);
           this.setState({
             todoModel: todoModel,

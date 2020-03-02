@@ -21,16 +21,16 @@ export default class TodoEdit extends XRComponent {
         var val = this.props.itemText.trim();
 
         if (val) {
-         this.post("ADD_NEW_ITEM", { itemText: val} );
+         this.post("TODO_ADD_NEW_ITEM", { itemText: val} );
         }
     }
   
     handleChange(e) {
-        this.post("EDIT_NEW_ITEM",{itemText: e.target.value});
+        this.post("TODO_EDIT_NEW_ITEM",{itemText: e.target.value});
     }
   
     toggleAll() {
-        this.post("TOGGLE_ALL");
+        this.post("TODO_TOGGLE_ALL");
     }
 
     render() {
