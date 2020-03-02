@@ -43,7 +43,7 @@ export default class TodoEdit extends XRComponent {
                     onChange={this.toggleAll}
                     checked={ !this.props.toggleAll }
                 />
-                <label style={{top:8, left:-5, zIndex:255}}
+                <label style={{top:10, left:-12, zIndex:255}}
                     htmlFor="toggle-all"
                 />
 

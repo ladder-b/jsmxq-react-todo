@@ -1,9 +1,8 @@
 import React from "react";
 import XRComponent from 'jsmxq-react'
 
-import "./App.css";
+// import "./App.css";
 
-import TodoItem from './TodoItem'
 import TodoEdit from "./TodoEdit"
 import TodoItemList from "./TodoItemList"
 import TodoFooter from "./TodoFooter"
