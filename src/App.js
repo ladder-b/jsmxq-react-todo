@@ -17,7 +17,7 @@ class App extends XRComponent {
       itemText: '',
       todoModel: props.todoModel,
       nowShowing: 'all',
-      toggleAll: 'select-all',
+      toggleAll: false,
       editId: '',
       editText: ''
     }
@@ -37,18 +37,7 @@ class App extends XRComponent {
   }
 
   deriveToggleState() {
-    let todoModel = this.state.todoModel;
-
-    let toggle = this.state.toggleAll;
-    if(todoModel.getCountByState(TodoItemState.ACTIVE) > 0 &&
-      todoModel.getCountByState(TodoItemState.COMPLETE) == 0) {
-      toggle = true;
-    } else if(todoModel.getCountByState(TodoItemState.ACTIVE) == 0 &&
-      todoModel.getCountByState(TodoItemState.COMPLETE) > 0) {
-      toggle = false;
-    }
-
-    return toggle;
+    return (this.state.todoModel.getCountByState(TodoItemState.ACTIVE) <= 0)  
   }
 
   onMessageReceive(msg) {
@@ -85,7 +74,7 @@ class App extends XRComponent {
             toggleAll: this.deriveToggleState()});
           break;
         case "TODO_TOGGLE_ALL":
-          todoModel.toggleAll(this.state.toggleAll);
+          todoModel.toggleAll(!this.state.toggleAll);
           this.setState({
             todoModel: todoModel,
             toggleAll: !this.state.toggleAll
@@ -117,7 +106,11 @@ class App extends XRComponent {
 						<h1>todos</h1>						
 					</header>
 
-          <TodoEdit itemText={this.state.itemText} toggleAll={this.state.toggleAll}/>
+          <TodoEdit
+            itemText={this.state.itemText}
+            toggleAll={this.state.toggleAll}
+            showToggle={todoModel.getSize() > 0}
+          />
           <TodoItemList
             itemList={todoModel.itemList}
             nowShowing={this.state.nowShowing}

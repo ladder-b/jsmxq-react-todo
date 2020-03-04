@@ -34,20 +34,30 @@ export default class TodoEdit extends XRComponent {
     }
 
     render() {
+
+        let toggleBtn = null;
+
+        if(this.props.showToggle) {
+            toggleBtn = (
+                <div>
+                    <input
+                        id="toggle-all"
+                        className="toggle-all"
+                        type="checkbox"
+                        onChange={this.toggleAll}
+                        checked={ this.props.toggleAll }
+                    />
+                    <label style={{top:10, left:-12, zIndex:255}}
+                        htmlFor="toggle-all"
+                    />
+                </div>
+            );
+        }
+
         return(
             <div>
+                {toggleBtn}
                 <input
-                    id="toggle-all"
-                    className="toggle-all"
-                    type="checkbox"
-                    onChange={this.toggleAll}
-                    checked={ !this.props.toggleAll }
-                />
-                <label style={{top:10, left:-12, zIndex:255}}
-                    htmlFor="toggle-all"
-                />
-
-               <input
                     type='text'
                     className="new-todo"
                     placeholder="What needs to be done?"
