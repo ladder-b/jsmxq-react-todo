@@ -36,8 +36,24 @@ class App extends XRComponent {
     this.subscriber.addSubject(/TODO_\B/);
   }
 
+  deriveToggleState() {
+    let todoModel = this.state.todoModel;
+
+    let toggle = this.state.toggleAll;
+    if(todoModel.getCountByState(TodoItemState.ACTIVE) > 0 &&
+      todoModel.getCountByState(TodoItemState.COMPLETE) == 0) {
+      toggle = true;
+    } else if(todoModel.getCountByState(TodoItemState.ACTIVE) == 0 &&
+      todoModel.getCountByState(TodoItemState.COMPLETE) > 0) {
+      toggle = false;
+    }
+
+    return toggle;
+  }
+
   onMessageReceive(msg) {
     let todoModel = this.state.todoModel;
+
     switch(msg.subject) {
         case 'TODO_EDIT_NEW_ITEM':
           this.setState({itemText: msg.content.itemText});
@@ -51,19 +67,22 @@ class App extends XRComponent {
           break;
           /*recvd, whenever todo item state changes*/
         case 'TODO_TOGGLE_STATE':
-          todoModel.toggleState(msg.content.id);
+          todoModel.toggleState(msg.content.id);          
           this.setState({
             count: msg.content.count,
-            completedCount: msg.content.completedCount
+            completedCount: msg.content.completedCount,
+            toggleAll: this.deriveToggleState()
           });
           break;
         case "TODO_CLEAR_COMPLETED":
           todoModel.clearCompleted();
-          this.setState({todoModel: todoModel});
+          this.setState({todoModel: todoModel,
+            toggleAll: true});
           break;
         case "TODO_DEL":
           todoModel.remove(msg.content.id);
-          this.setState({todoModel: todoModel});
+          this.setState({todoModel: todoModel,
+            toggleAll: this.deriveToggleState()});
           break;
         case "TODO_TOGGLE_ALL":
           todoModel.toggleAll(this.state.toggleAll);
