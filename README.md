@@ -2,7 +2,7 @@ Todo app using React and messaging library Jsmxq.
 ### Installation
 
 ```
-git clone https://github.com/ladder-b/jsmxq-react-demo.git
+git clone https://github.com/ladder-b/jsmxq-react-todo.git
 npm install
 npm run start
 ```
